@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Femes</title>
+</head>
+
+<body>
+  <!-- navbar/parent -->
+  <section class="flex justify-between items-center mx-4 my-3 gap-2 sm:gap-0">
+
+    <!-- start -->
+    <div class="btn btn-xs p-0 sm:btn-md btn-ghost">
+      <a class="flex justify-center items-center text-lg md:text-xl">
+        <div class="flex justify-center items-center gap-1">
+          Femes<span class="hidden md:block">|</span><span class="hidden md:block">Favorite Memes</span>
+        </div>
+        <svg width="20" height="24" class="md:w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 21.5L17.5 13L13 10L15 2.5L6.5 11L11 14L9 21.5Z" fill="currentColor" />
+        </svg>
+      </a>
+    </div>
+
+    <!-- center -->
+    <div>
+      <label class="input input-sm md:input-md input-bordered flex items-center gap-2">
+        <input id="search" type="text" class="grow w-12 sm:w-24 md:w-28 lg:w-96" placeholder="Search" minlength="2" />
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70">
+          <path fill-rule="evenodd"
+            d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+            clip-rule="evenodd" />
+        </svg>
+      </label>
+    </div>
+
+    <!-- end -->
+    <div class="flex justify-center items-center gap0.5">
+      <!-- themes -->
+      <div data-choose-theme class="dropdown dropdown-bottom dropdown-end">
+
+        <div tabindex="0" role="button" class="btn btn-xs sm:btn-sm md:btn-md">
+          <div class="flex justify-center items-center gap-2">
+            <p class="hidden md:block">Theme</p>
+            <svg width="24" height="20" class="md:hidden" viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M8.20348 2.00378C9.46407 2.00378 10.5067 3.10742 10.6786 4.54241L19.1622 13.0259L11.384 20.8041C10.2124 21.9757 8.31291 21.9757 7.14134 20.8041L2.8987 16.5615C1.72713 15.3899 1.72713 13.4904 2.8987 12.3188L5.70348 9.51404V4.96099C5.70348 3.32777 6.82277 2.00378 8.20348 2.00378ZM8.70348 4.96099V6.51404L7.70348 7.51404V4.96099C7.70348 4.63435 7.92734 4.36955 8.20348 4.36955C8.47963 4.36955 8.70348 4.63435 8.70348 4.96099ZM8.70348 10.8754V9.34247L4.31291 13.733C3.92239 14.1236 3.92239 14.7567 4.31291 15.1473L8.55555 19.3899C8.94608 19.7804 9.57924 19.7804 9.96977 19.3899L16.3337 13.0259L10.7035 7.39569V10.8754C10.7035 10.9184 10.7027 10.9612 10.7012 11.0038H8.69168C8.69941 10.9625 8.70348 10.9195 8.70348 10.8754Z"
+                fill="currentColor" />
+              <path
+                d="M16.8586 16.8749C15.687 18.0465 15.687 19.946 16.8586 21.1175C18.0302 22.2891 19.9297 22.2891 21.1013 21.1175C22.2728 19.946 22.2728 18.0465 21.1013 16.8749L18.9799 14.7536L16.8586 16.8749Z"
+                fill="currentColor" />
+            </svg>
+            <svg width="8px" height="8px" class="hidden sm:inline-block fill-current opacity-60"
+              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048">
+              <path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
+            </svg>
+          </div>
+        </div>
+
+        <ul tabindex="0"
+          class="dropdown-content z-[1] p-2 shadow-2xl bg-base-300 rounded-box w-52 max-h-[40vh] overflow-y-auto">
+
+        </ul>
+
+      </div>
+
+      <!-- drawer -->
+      <div class="drawer drawer-end lg:hidden">
+        <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
+        <div class="drawer-content">
+          <!-- Page content here -->
+          <label for="my-drawer-4" class="drawer-button btn btn-ghost btn-circle">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+            </svg>
+          </label>
+        </div>
+        <div class="drawer-side z-10">
+          <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
+          <ul class="menu rounded-tl-lg rounded-bl-lg bg-base-200 text-base-content min-h-full w-7/12 p-4">
+            <!-- Sidebar content here -->
+            <div class="font-semibold text-center mb-2">Femes | Favorite Memes</div>
+            <hr class="rounded-sm border-[1px] border-accent">
+
+            <!-- stats -->
+            <ul id="drawerStats" class="hidden menu menu-horizontal justify-center items-center shadow rounded-box">
+              <li>
+                <a>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 stroke-current" fill="none"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                  </svg>
+                  <p id="drawerFavCount" class="text-base font-normal">0</p>
+                </a>
+              </li>
+              <li id="drawerClearAPI" class="hover:cursor-pointer">
+                <a>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M13 4.00894C13.0002 3.45665 12.5527 3.00876 12.0004 3.00854C11.4481 3.00833 11.0002 3.45587 11 4.00815L10.9968 12.0116C10.9966 12.5639 11.4442 13.0118 11.9965 13.012C12.5487 13.0122 12.9966 12.5647 12.9968 12.0124L13 4.00894Z"
+                      fill="currentColor" />
+                    <path
+                      d="M4 12.9917C4 10.7826 4.89541 8.7826 6.34308 7.33488L7.7573 8.7491C6.67155 9.83488 6 11.3349 6 12.9917C6 16.3054 8.68629 18.9917 12 18.9917C15.3137 18.9917 18 16.3054 18 12.9917C18 11.3348 17.3284 9.83482 16.2426 8.74903L17.6568 7.33481C19.1046 8.78253 20 10.7825 20 12.9917C20 17.41 16.4183 20.9917 12 20.9917C7.58172 20.9917 4 17.41 4 12.9917Z"
+                      fill="currentColor" />
+                  </svg>
+                </a>
+              </li>
+            </ul>
+
+            <div id="drawer_mobile">
+
+            </div>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- searchErroMsg -->
+  <p id="searchErroMsg" class="hidden md:ml-32 text-center text-red-500 text-sm font-medium">
+    Enter Two Characters or More
+  </p>
+
+  <!-- main content -->
+  <section class="grid grid-cols-1 mt-4 lg:grid-cols-2-20/80 gap-5">
+    <!-- side bar -->
+    <div class="hidden lg:block">
+      <div class="fixed left-4 max-h-[90vh] rounded-box bg-base-200 overflow-y-auto">
+        <ul id="sideBar" class="menu ml-2 p-1 w-44 xl:w-56 2xl:w-72 3xl:w-90 text-base-content">
+
+        </ul>
+      </div>
+    </div>
+
+    <!-- feed -->
+    <!-- <div id="feed" class="lg:mr-10 min-h-[90vh] shadow rounded-box"> -->
+    <div id="feed" class="lg:mr-10">
+      <!-- stats -->
+      <div id="stats" class="hidden lg:hidden justify-end mb-10">
+        <div class="stats shadow">
+          <!-- favourite stat -->
+          <div class="stat px-3 py-4 place-items-center">
+            <div class="stat-title">Favourite</div>
+
+            <div class="flex justify-center gap-2">
+              <div id="favCount" class="stat-value text-3xl text-secondary">0</div>
+              <div class="flex flex-col justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  class="inline-block h-7 w-7 stroke-current text-secondary">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z">
+                  </path>
+                </svg>
+              </div>
+            </div>
+
+          </div>
+          <!-- Clear API stat -->
+          <div id="clearAPI" class="stat px-3 py-4 place-items-center hover:cursor-pointer">
+            <div class="stat-title">Clear API</div>
+
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+              class="inline-block h-7 w-7 stroke-current text-primary">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5"
+                d="M13 4.00894C13.0002 3.45665 12.5527 3.00876 12.0004 3.00854C11.4481 3.00833 11.0002 3.45587 11 4.00815L10.9968 12.0116C10.9966 12.5639 11.4442 13.0118 11.9965 13.012C12.5487 13.0122 12.9966 12.5647 12.9968 12.0124L13 4.00894Z"
+                fill="currentColor" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5"
+                d="M4 12.9917C4 10.7826 4.89541 8.7826 6.34308 7.33488L7.7573 8.7491C6.67155 9.83488 6 11.3349 6 12.9917C6 16.3054 8.68629 18.9917 12 18.9917C15.3137 18.9917 18 16.3054 18 12.9917C18 11.3348 17.3284 9.83482 16.2426 8.74903L17.6568 7.33481C19.1046 8.78253 20 10.7825 20 12.9917C20 17.41 16.4183 20.9917 12 20.9917C7.58172 20.9917 4 17.41 4 12.9917Z"
+                fill="currentColor" />
+            </svg>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Ask Saved Modal -->
+      <dialog id="saved_modal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box">
+
+          <form method="dialog">
+            <button class="btn btn-sm btn-circle absolute right-2 top-2 hover:btn-error">✕</button>
+          </form>
+
+          <h3 class="font-bold text-lg mb-3">Give A Name</h3>
+
+          <input id="saved_title" type="text" placeholder="Type here"
+            class="input input-bordered input-primary w-full max-w-xs" />
+          <div class="flex flex-row justify-start items-center mt-4">
+            <button id="createTitle" class="btn hover:btn-success">Create</button>
+          </div>
+
+        </div>
+      </dialog>
+
+      <!-- Remove Saved Modal -->
+
+      <!-- spinner -->
+      <div id="spinner" class="hidden text-center">
+        <span class="loading loading-ring loading-lg"></span>
+      </div>
+
+      <!-- warning -->
+      <div id="warning" class="hidden justify-center items-center">
+        <div role="alert"
+          class="alert w-1/2 md:w-auto alert-warning flex flex-col md:flex-row justify-center items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <span></span>
+        </div>
+      </div>
+
+
+      <!-- memes -->
+
+      <div class="relative w-full max-h-[90vh] lg:max-h-[75vh] rounded-box bg-base-200 overflow-y-auto">
+        <div id="memesContainer" class="hidden grid-cols-1 sm:grid-cols-2 md:grid-cols-3 min-[1360px]:grid-cols-4 2xl:grid-cols-5
+        gap-x-4 gap-y-7 justify-items-center p-5">
+        </div>
+      </div>
+
+      <!-- Initial -->
+      <!-- <div class="flex flex-col items-center gap-3"> -->
+      <p class="text-center">You need an API key to get the memes feed</p>
+
+      <!-- Open the modal using ID.showModal() method -->
+      <div class="text-center mt-3">
+        <button id="setAPI_btn" class="btn btn-primary">Set API Key</button>
+      </div>
+      <dialog id="askAPI_modal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box">
+
+          <form method="dialog">
+            <button class="btn btn-sm btn-circle absolute right-2 top-2 hover:btn-error">✕</button>
+          </form>
+
+          <h3 class="font-bold text-lg">Set Your API Key</h3>
+          <p class="py-4 font-medium text-sm">Find your own key here:
+            <a href="https://humorapi.com/console/#Profile" target="_blank" class="btn btn-xs hover:btn-info">Humor
+              API!</a>
+          </p>
+          <p id="errorMsg" class="hidden pb-4 font-medium text-sm text-red-500">
+
+          </p>
+          <input id="apiKey" type="text" placeholder="Type here"
+            class="input input-bordered input-primary w-full max-w-xs" />
+          <div class="flex flex-row justify-start items-center mt-4">
+            <button id="apiSubmit" class="btn hover:btn-success">Submit</button>
+          </div>
+        </div>
+      </dialog>
+      <!-- </div> -->
+
+    </div>
+  </section>
+  <script type="module" src="/main.js"></script>
+</body>
+
+</html>

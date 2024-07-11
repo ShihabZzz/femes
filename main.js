@@ -28,12 +28,13 @@ let demoStatus = () => {
 }
 console.log(demoStatus())
 
-let demo = async () => {
+let demo = async (fileName) => {
     if (demoStatus()) {
         feedConditions();
         localStorage.clear();
-        const demoJSON = '/demo_memes.json';
+        const demoJSON = `/${fileName}.json`;
         try {
+            showSpinner()
             const ep = await fetch(demoJSON);
             if (!ep) {
                 throw new Error('Facing network response issue...')
@@ -41,13 +42,15 @@ let demo = async () => {
             const response = await ep.json();
 
             shuffle(response);
-            
+
             set('fav', []);
             showStats();
             drawerStats()
             feedBuilder(response);
         } catch (error) {
             console.error('Unexpected Erorr:', error.message, error.status);
+        } finally {
+            hideSpinner();
         }
     }
 }
@@ -334,7 +337,7 @@ let requestSegment = async (keywords) => {
         if (!ep.ok) {
             const response = await ep.json();
             console.log(response.code);
-            
+
             if (response.code == 402) {
                 if (!apiKey) {
                     feedConditions();
@@ -381,7 +384,7 @@ let requestSegment = async (keywords) => {
     }
 }
 
-demo();
+demo('demo_memes');
 
 if (!apiKey && !demoStatus())
     localStorage.clear();
@@ -407,7 +410,13 @@ search.addEventListener('input', () => {
     clearTimeout(timeOutId);
     const searchErroMsg = document.getElementById('searchErroMsg');
     searchErroMsg.classList.add('hidden');
-    if (!apiKey && search.value)
+    if (demoStatus() && search.value) {
+        if (search.validity.tooShort) {
+            searchErroMsg.classList.remove('hidden');
+        } else {
+            timeOutId = setTimeout(() => demo('demo_search'), 2000);
+        }
+    } else if (!apiKey && search.value)
         askAPI_modal.showModal();
     else {
         if (search.validity.tooShort) {

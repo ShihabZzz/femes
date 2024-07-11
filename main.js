@@ -28,50 +28,9 @@ let demoStatus = () => {
 }
 console.log(demoStatus())
 
-// if (demoStatus()) {
-//     let demo = async () => {
-//         localStorage.clear();
-//         const demoJSON = '/demo_memes.json';
-//         try {
-//             const ep = await fetch(demoJSON);
-//             if (!ep) {
-//                 throw new Error('Facing network response issue...')
-//             }
-//             const response = await ep.json();
-
-//             // Fisher–Yates shuffle Algorithm
-//             function shuffle(array) {
-//                 let currentIndex = array.length;
-
-//                 // While there remain elements to shuffle...
-//                 while (currentIndex != 0) {
-
-//                     // Pick a remaining element...
-//                     let randomIndex = Math.floor(Math.random() * currentIndex);
-//                     currentIndex--;
-
-//                     // And swap it with the current element.
-//                     [array[currentIndex], array[randomIndex]] = [
-//                         array[randomIndex], array[currentIndex]];
-//                 }
-//             }
-//             shuffle(response);
-
-//             // console.log(response);
-//             set('fav', []);
-//             feedConditions();
-//             showStats();
-//             drawerStats()
-//             feedBuilder(response);
-//         } catch (error) {
-//             console.error('Unexpected Erorr:', error.message, error.status);
-//         }
-//     }
-//     demo();
-// }
-
 let demo = async () => {
     if (demoStatus()) {
+        feedConditions();
         localStorage.clear();
         const demoJSON = '/demo_memes.json';
         try {
@@ -82,9 +41,8 @@ let demo = async () => {
             const response = await ep.json();
 
             shuffle(response);
-
+            
             set('fav', []);
-            feedConditions();
             showStats();
             drawerStats()
             feedBuilder(response);
@@ -93,7 +51,6 @@ let demo = async () => {
         }
     }
 }
-demo();
 
 // themes-generation
 if (dropDownContent) {
@@ -374,12 +331,10 @@ let requestSegment = async (keywords) => {
             url += `&keywords=${keywords}`;
         }
         const ep = await fetch(url, reqOptions);
-
         if (!ep.ok) {
             const response = await ep.json();
-
             console.log(response.code);
-
+            
             if (response.code == 402) {
                 if (!apiKey) {
                     feedConditions();
@@ -407,7 +362,6 @@ let requestSegment = async (keywords) => {
             error.status = ep.status;
             throw error;
         }
-
         const response = await ep.json();
         // console.log(response);
 
@@ -426,6 +380,8 @@ let requestSegment = async (keywords) => {
         hideSpinner();
     }
 }
+
+demo();
 
 if (!apiKey && !demoStatus())
     localStorage.clear();

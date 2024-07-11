@@ -1,6 +1,6 @@
 import './style.css'
 import { loadThemes } from './themes.js'
-import { loadTrash, loadSaved } from './svgUtils.js'
+import { loadTrash, loadSaved, loadMaximize } from './svgUtils.js'
 import { shuffle } from './shuffle.js'
 
 let set = (key, value) => {
@@ -16,6 +16,7 @@ let search = document.getElementById('search');
 const setAPI_btn = document.getElementById('setAPI_btn');
 const askAPI_modal = document.getElementById('askAPI_modal');
 const saved_modal = document.getElementById('saved_modal');
+const max_modal = document.getElementById('max_modal');
 const apiSubmit = document.getElementById('apiSubmit');
 const errorMsg = document.getElementById('errorMsg');
 const dropDownContent = document.querySelector('div[data-choose-theme] ul.dropdown-content');
@@ -145,6 +146,7 @@ let drawer = () => {
 
         const trashIcon = loadTrash();
         trashIcon.id = index;
+        trashIcon.dataset.name = 'loadTrash';
         trashIcon.classList.add('opacity-0', 'group-hover:opacity-100', 'hover:text-error');
 
         parentConatiner.appendChild(liTag);
@@ -154,8 +156,19 @@ let drawer = () => {
 
     drawer.addEventListener('click', (event) => {
         event.stopImmediatePropagation();
-        if (event.target.closest('svg')) {
-            const id = event.target.closest('svg').id;
+        const svgElement = event.target.closest('svg');
+        if (!svgElement) {
+            const imgElement = event.target.closest('div').querySelector('svg');
+            if (imgElement) {
+                const imgTag = max_modal.querySelector('div img');
+                const favArr = get('fav');
+                imgTag.src = favArr[imgElement.id].src;
+                max_modal.showModal();
+            }
+            return;
+        }
+        if (svgElement.dataset.name === 'loadTrash') {
+            const id = svgElement.id;
             deleteItem(id);
         }
     })
@@ -185,6 +198,7 @@ let sideBarBuilder = () => {
 
         const trashIcon = loadTrash();
         trashIcon.id = index;
+        trashIcon.dataset.name = 'loadTrash';
         trashIcon.classList.add('opacity-0', 'group-hover:opacity-100', 'hover:text-error');
 
         avatar.appendChild(mask);
@@ -195,8 +209,18 @@ let sideBarBuilder = () => {
     });
     sideBar.addEventListener('click', (event) => {
         event.stopImmediatePropagation();
-        if (event.target.closest('svg')) {
-            const id = event.target.closest('svg').id;
+        const svgElement = event.target.closest('svg');
+        if (!svgElement) {
+            const imgElement = event.target.closest('li').querySelector('img');
+            if (imgElement) {
+                const imgTag = max_modal.querySelector('div img');
+                imgTag.src = imgElement.src;
+                max_modal.showModal();
+            }
+            return;
+        }
+        if (svgElement.dataset.name === 'loadTrash') {
+            const id = svgElement.id;
             deleteItem(id);
         }
     })
@@ -278,37 +302,55 @@ let feedBuilder = (memes) => {
         img.id = memes[i].id;
         imgConatiner.appendChild(img);
 
-        const hoverContainer = document.createElement('div');
-        hoverContainer.classList.add(
+        const hoverContainerRight = document.createElement('div');
+        hoverContainerRight.classList.add(
             'absolute', 'bottom-0',
             'right-0', '-translate-x-1/2', '-translate-y-1/2',
             'opacity-0', 'transition-opacity', 'duration-500', 'group-hover:opacity-100',
             'hover:cursor-pointer'
         );
-
-        // Create the SVG element
         const savedIcon = loadSaved();
         savedIcon.id = `svg-${memes[i].id}`;
+        savedIcon.dataset.name = 'loadSaved';
         if (isAvailable(memes[i].id)) {
             savedIcon.querySelector('path').setAttribute('fill', 'green');
         }
-        hoverContainer.appendChild(savedIcon);
+        hoverContainerRight.appendChild(savedIcon);
 
-        imgConatiner.appendChild(hoverContainer);
+        const hoverContainerLeft = document.createElement('div');
+        hoverContainerLeft.classList.add(
+            'absolute', 'bottom-0',
+            'left-0', 'translate-x-1/2', '-translate-y-1/2',
+            'opacity-0', 'transition-opacity', 'duration-500', 'group-hover:opacity-100',
+            'hover:cursor-pointer'
+        );
+        const maximizeIcon = loadMaximize();
+        maximizeIcon.dataset.name = 'loadMaximize';
+        hoverContainerLeft.appendChild(maximizeIcon);
+
+        imgConatiner.appendChild(hoverContainerRight);
+        imgConatiner.appendChild(hoverContainerLeft);
         memesContainer.appendChild(imgConatiner);
     }
     memesContainer.addEventListener('click', (event) => {
-        if (event.target.closest('svg')) {
-            // localStorage.setItem('fav', JSON.stringify([]));
-            const savedIconColor = event.target.closest('svg').querySelector('path');
+        const svgElement = event.target.closest('svg');
+        if (!svgElement) {
+            return;
+        }
+        const src = event.target.closest('div.box-border').querySelector('img').src;
 
+        if (svgElement.dataset.name === 'loadSaved') {
+            const savedIconColor = event.target.closest('svg').querySelector('path');
             const id = event.target.closest('div.box-border').querySelector('img').id;
             if (isAvailable(id)) {
                 return;
             }
-            const src = event.target.closest('div.box-border').querySelector('img').src;
             saved_modal.showModal();
             sideBar(id, src, savedIconColor);
+        } else if (svgElement.dataset.name === 'loadMaximize') {
+            const imgTag = max_modal.querySelector('div img');
+            imgTag.src = src;
+            max_modal.showModal();
         }
     })
 }

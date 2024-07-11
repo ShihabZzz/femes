@@ -200,6 +200,20 @@
 
       <!-- Remove Saved Modal -->
 
+      <!-- Maximize Modal -->
+      <dialog id="max_modal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box">
+
+          <form method="dialog">
+            <button class="btn btn-sm btn-circle absolute right-2 top-2 hover:btn-error">✕</button>
+          </form>
+
+          <img class="w-full h-auto" alt="Maximized Meme">
+
+        </div>
+      </dialog>
+
+
       <!-- spinner -->
       <div id="spinner" class="hidden text-center">
         <span class="loading loading-ring loading-lg"></span>
@@ -231,10 +245,10 @@
       <!-- <div class="flex flex-col items-center gap-3"> -->
       <p class="text-center">You need an API key to get the memes feed</p>
 
-      <!-- Open the modal using ID.showModal() method -->
       <div class="text-center mt-3">
         <button id="setAPI_btn" class="btn btn-primary">Set API Key</button>
       </div>
+      <!-- askAPI_modal -->
       <dialog id="askAPI_modal" class="modal modal-bottom sm:modal-middle">
         <div class="modal-box">
 

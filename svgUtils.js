@@ -49,3 +49,41 @@ export function loadSaved() {
 
     return svg;
 }
+
+export function loadMaximize() {
+    // Create the SVG element
+    const NS = 'http://www.w3.org/2000/svg'; //nameSpace
+    const svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("width", "20");
+    svg.setAttribute("height", "20");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("fill", "none");
+
+    // Create the first path element
+    const path1 = document.createElementNS(NS, "path");
+    path1.setAttribute("d", "M3 3H9V5H5V9H3V3Z");
+    path1.setAttribute("fill", "currentColor");
+
+    // Create the second path element
+    const path2 = document.createElementNS(NS, "path");
+    path2.setAttribute("d", "M3 21H9V19H5V15H3V21Z");
+    path2.setAttribute("fill", "currentColor");
+
+    // Create the third path element
+    const path3 = document.createElementNS(NS, "path");
+    path3.setAttribute("d", "M15 21H21V15H19V19H15V21Z");
+    path3.setAttribute("fill", "currentColor");
+
+    // Create the fourth path element
+    const path4 = document.createElementNS(NS, "path");
+    path4.setAttribute("d", "M21 3H15V5H19V9H21V3Z");
+    path4.setAttribute("fill", "currentColor");
+
+    // Append paths to the SVG element
+    svg.appendChild(path1);
+    svg.appendChild(path2);
+    svg.appendChild(path3);
+    svg.appendChild(path4);
+
+    return svg;
+}

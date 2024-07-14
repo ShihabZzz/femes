@@ -11,6 +11,7 @@ let get = (key) => {
     return JSON.parse(localStorage.getItem(key));
 }
 
+let apiKeyInput = document.getElementById('apiKey');
 let apiKey = get('apiKey') || '';
 let search = document.getElementById('search');
 const setAPI_btn = document.getElementById('setAPI_btn');
@@ -235,12 +236,15 @@ let isAvailable = (id) => {
     return false;
 }
 
-let sideBar = (id, src, savedIconColor) => {
+let sideBar = (id, src, description, savedIconColor) => {
     const fav = JSON.parse(localStorage.getItem('fav'));
     if (fav) {
         const createTitle = document.getElementById('createTitle');
-        createTitle.addEventListener('click', () => {
-            const saved_title = document.getElementById('saved_title').value || '';
+        const savedTitleInput = document.getElementById('saved_title');
+        savedTitleInput.value = '';
+
+        const sideBarAction = () => {
+            const saved_title = document.getElementById('saved_title').value || `${description}`;
             const obj = {
                 src: src,
                 id: id,
@@ -253,7 +257,13 @@ let sideBar = (id, src, savedIconColor) => {
             updateStats(fav.length);
             sideBarBuilder();
             drawer();
-        })
+        }
+        createTitle.addEventListener('click', sideBarAction);
+        savedTitleInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                sideBarAction();
+            }
+        });
     }
 }
 
@@ -300,6 +310,7 @@ let feedBuilder = (memes) => {
         img.classList.add('w-full', 'h-60', 'block', 'object-contain');
         img.src = memes[i].url;
         img.id = memes[i].id;
+        img.alt = memes[i].description;
         imgConatiner.appendChild(img);
 
         const hoverContainerRight = document.createElement('div');
@@ -342,11 +353,13 @@ let feedBuilder = (memes) => {
         if (svgElement.dataset.name === 'loadSaved') {
             const savedIconColor = event.target.closest('svg').querySelector('path');
             const id = event.target.closest('div.box-border').querySelector('img').id;
+            const description = event.target.closest('div.box-border').querySelector('img').alt;
+
             if (isAvailable(id)) {
                 return;
             }
             saved_modal.showModal();
-            sideBar(id, src, savedIconColor);
+            sideBar(id, src, description, savedIconColor);
         } else if (svgElement.dataset.name === 'loadMaximize') {
             const imgTag = max_modal.querySelector('div img');
             imgTag.src = src;
@@ -378,7 +391,7 @@ let requestSegment = async (keywords) => {
         const ep = await fetch(url, reqOptions);
         if (!ep.ok) {
             const response = await ep.json();
-            console.log(response.code);
+            // console.log(response.code);
 
             if (response.code == 402) {
                 if (!apiKey) {
@@ -469,9 +482,16 @@ search.addEventListener('input', () => {
     }
 })
 
-apiSubmit.addEventListener('click', () => {
+const apiSubmitAction = () => {
     errorMsg.classList.add('hidden');
     requestSegment();
+}
+
+apiSubmit.addEventListener('click', apiSubmitAction);
+apiKeyInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        apiSubmitAction();
+    }
 });
 
 setAPI_btn.addEventListener('click', () => {
